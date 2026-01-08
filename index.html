@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Home - Abre Cortinas Inteligente | Control desde tu Celular</title>
+    <meta name="description" content="Automatiza tus cortinas en 5 minutos. Despierta con el sol, no con la alarma. Control desde tu celular, compatible con Alexa y Google Home.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,128C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.6);
+        }
+        
+        .benefit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .benefit-icon {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-card {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .stars {
+            color: #ffc107;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .video-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            min-height: 400px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="rgba(255,255,255,0.05)" width="1200" height="600"/><circle cx="600" cy="300" r="80" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/><path d="M560 280 L560 320 L640 300 Z" fill="rgba(255,255,255,0.3)"/></svg>') center/cover;
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .video-placeholder-text {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 12px 0;
+            font-size: 16px;
+            color: #2c3e50;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list li:before {
+            content: '✓ ';
+            color: #2ecc71;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .stock-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        
+        .cta-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            
+            .hero-content h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- ============ BLOQUE 1: HERO / GANCHO ============ -->
+    <section class="hero-section">
+        <div class="hero-content fade-in">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                Despierta con el sol, no con la alarma.
+            </h1>
+            
+            <h2 class="text-xl md:text-2xl text-gray-100 mb-8 font-light">
+                Automatiza tus cortinas en menos de 5 minutos y controla la luz de tu hogar desde tu celular.
+            </h2>
+            
+            <!-- Video Placeholder -->
+            <div class="video-placeholder">
+                <div class="video-placeholder-text">
+                    <i class="fas fa-play text-5xl mb-4 block"></i>
+                    <p>Video: Cortinas abriéndose automáticamente</p>
+                </div>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="cta-button-container">
+                <a href="https://www.mercadolibre.com.ar" target="_blank" class="btn-primary text-white px-8 py-4 rounded-lg font-bold text-lg inline-block">
+                    <i class="fas fa-shopping-cart mr-2"></i> COMPRAR SEGURO EN MERCADO LIBRE
+                </a>
+            </div>
+            
+            <p class="text-sm text-gray-200 mt-4">
+                <i class="fas fa-check-circle mr-2"></i> Envío Full en 24hs | 
+                <i class="fas fa-shield-alt mr-2"></i> Compra Protegida
+            </p>
+        </div>
+    </section>
+
+    <!-- ============ BLOQUE 2: PROBLEMA Y SOLUCIÓN ============ -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title">Tu día no debería empezar con un sobresalto.</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                        Sabemos lo que se siente: la alarma estridente, la pereza de levantarte a oscuras, el sol que daña tus muebles o el reflejo que arruina tu película. Pequeñas molestias diarias que se acumulan.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-sun text-2xl text-yellow-400 mr-4 mt-1"></i>
+                            <p class="text-gray-700"><strong>Despertadores ruidosos</strong> que arruinan tu mañana</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-couch text-2xl text-orange-400 mr-4 mt-1"></i>
+                            <p class="text-gray-700"><strong>Muebles dañados</strong> por el sol constante</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-home text-2xl text-blue-400 mr-4 mt-1"></i>
+                            <p class="text-gray-700"><strong>Casa vacía</strong> cuando viajas (sin seguridad)</p>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-bed text-2xl text-purple-400 mr-4 mt-1"></i>
+                            <p class="text-gray-700"><strong>Pereza de levantarte</strong> del sofá o la cama</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-100 to-blue-100 rounded-lg p-8 text-center min-h-80 flex items-center justify-center">
+                    <div>
+                        <i class="fas fa-magic text-6xl text-purple-600 mb-4 block"></i>
+                        <p class="text-gray-700 text-lg">
+                            <strong>Imagen/GIF:</strong> Cortinas abriéndose y cerrándose automáticamente
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 border-l-4 border-purple-600 p-8 rounded-lg">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">La solución es más simple de lo que crees.</h3>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                    <strong>Aura Home</strong> es un pequeño y potente dispositivo que se instala en tus cortinas existentes. No necesitas ser un experto ni cambiar nada en tu casa. Es la forma más fácil de dar el primer paso hacia un hogar verdaderamente inteligente.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BLOQUE 3: BENEFICIOS CLAVE ============ -->
+    <section class="py-20 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="section-title">Una pequeña pieza, un gran cambio en tu vida.</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Beneficio 1 -->
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Instalación en 5 Minutos</h3>
+                    <p class="text-gray-600">
+                        Sin taladros, sin cables, sin complicaciones. Simplemente ajústalo a tu riel o barra de cortina, calíbralo con la app y listo. ¡Así de fácil!
+                    </p>
+                </div>
+                
+                <!-- Beneficio 2 -->
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Control Total en tu Mano</h3>
+                    <p class="text-gray-600">
+                        Usa nuestra app intuitiva para abrir y cerrar tus cortinas desde cualquier lugar. O intégralo con Alexa y Google Home para controlarlo con tu voz.
+                    </p>
+                </div>
+                
+                <!-- Beneficio 3 -->
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Seguridad y Ahorro</h3>
+                    <p class="text-gray-600">
+                        Programa horarios para simular que hay gente en casa cuando viajas. Cierra las cortinas en las horas de más calor para proteger tus muebles y ahorrar energía.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BLOQUE 4: PRUEBA SOCIAL ============ -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="section-title">Más de 5,000 clientes ya disfrutan de mañanas perfectas.</h2>
+            
+            <p class="text-center text-gray-600 text-lg mb-12">
+                No confíes solo en nuestra palabra. Esto es lo que dicen nuestros compradores en Mercado Libre:
+            </p>
+            
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-800 mb-3 italic">
+                    "¡La mejor compra del año! Lo instalé en 2 minutos y funciona de maravilla. Poder abrir las cortinas desde la cama no tiene precio. Lo recomiendo 100%."
+                </p>
+                <p class="font-bold text-gray-700">— Mariana G., Comprador Verificado</p>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-800 mb-3 italic">
+                    "Excelente producto. Lo uso para simular presencia cuando no estoy en casa y me da mucha tranquilidad. La batería dura muchísimo."
+                </p>
+                <p class="font-bold text-gray-700">— Carlos S., Comprador Verificado</p>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card fade-in">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="text-gray-800 mb-3 italic">
+                    "Súper recomendado. Funciona perfectamente, la app es muy intuitiva y el servicio técnico responde rápido. Muy contento con mi compra."
+                </p>
+                <p class="font-bold text-gray-700">— Diego M., Comprador Verificado</p>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://www.mercadolibre.com.ar" target="_blank" class="btn-primary text-white px-8 py-4 rounded-lg font-bold text-lg inline-block">
+                    <i class="fas fa-star mr-2"></i> VER MÁS OPINIONES Y COMPRAR
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BLOQUE 5: LLAMADA A LA ACCIÓN FINAL ============ -->
+    <section class="py-20 px-4 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Imagen del Producto -->
+                <div class="bg-gradient-to-br from-purple-400 to-blue-400 rounded-lg p-8 text-center min-h-80 flex items-center justify-center">
+                    <div class="text-white">
+                        <i class="fas fa-cube text-6xl mb-4 block"></i>
+                        <p class="text-lg">
+                            <strong>Imagen del Producto:</strong> Aura Home en su caja
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Contenido -->
+                <div class="text-white">
+                    <h2 class="text-4xl font-bold mb-6">Estás a un clic de transformar tu hogar.</h2>
+                    
+                    <p class="text-lg text-gray-300 mb-8">
+                        Tu compra es 100% segura a través de Mercado Libre.
+                    </p>
+                    
+                    <ul class="feature-list text-white mb-8">
+                        <li class="text-lg">
+                            <strong>Recíbelo Mañana:</strong> Envío rápido y seguro con Mercado Envíos Full.
+                        </li>
+                        <li class="text-lg">
+                            <strong>Compra Protegida:</strong> Tu dinero está seguro hasta que recibas tu producto.
+                        </li>
+                        <li class="text-lg">
+                            <strong>Paga Como Quieras:</strong> Todas las tarjetas de crédito, débito y hasta 12 cuotas sin interés.
+                        </li>
+                        <li class="text-lg">
+                            <strong>Garantía de 12 Meses:</strong> Estamos tan seguros de nuestro producto que te damos un año de garantía.
+                        </li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-bold mb-6">¿Listo para empezar a vivir en el futuro?</h3>
+                    
+                    <a href="https://www.mercadolibre.com.ar" target="_blank" class="btn-success text-white px-10 py-5 rounded-lg font-bold text-xl inline-block mb-4">
+                        <i class="fas fa-check-circle mr-2"></i> SÍ, ¡LO QUIERO AHORA!
+                    </a>
+                    
+                    <div class="stock-warning">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Stock limitado. ¡Asegura el tuyo hoy!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="bg-gray-900 text-gray-400 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-white font-bold mb-4">Sobre Aura Home</h4>
+                    <p class="text-sm">
+                        Transformamos hogares ordinarios en espacios inteligentes con soluciones simples y asequibles.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Soporte</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Preguntas Frecuentes</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contacto</a></li>
+                        <li><a href="#" class="hover:text-white transition">Garantía</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="text-sm space-y-2">
+                        <li><a href="#" class="hover:text-white transition">Términos y Condiciones</a></li>
+                        <li><a href="#" class="hover:text-white transition">Política de Privacidad</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-sm">
+                <p>&copy; 2024 Aura Home. Todos los derechos reservados. | Compra segura a través de Mercado Libre</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ SCRIPT PARA TRACKING ============ -->
+    <script>
+        // Evento de clic en botones de compra (para el Píxel de Meta)
+        document.querySelectorAll('a[href*="mercadolibre"]').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Aquí es donde se dispararía el evento personalizado de Meta
+                console.log('Usuario hizo clic en botón de compra');
+                
+                // Si tienes el Píxel de Meta instalado, aquí iría:
+                // fbq('track', 'ClickCompraML');
+                
+                // Retraso pequeño para permitir que se registre el evento antes de navegar
+                setTimeout(() => {
+                    window.open(this.href, '_blank');
+                }, 100);
+                
+                e.preventDefault();
+            });
+        });
+        
+        // Scroll suave (ya está en CSS, pero esto es un respaldo)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Log de carga de página
+        window.addEventListener('load', function() {
+            console.log('Landing page cargada correctamente');
+            // Aquí iría: fbq('track', 'PageView');
+        });
+    </script>
+
+</body>
+</html>
